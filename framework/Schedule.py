@@ -1,4 +1,4 @@
-import Event
+from framework.Event import Event
 from datetime import datetime, timedelta
 from collections import deque
 

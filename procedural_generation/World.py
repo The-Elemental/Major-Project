@@ -1,4 +1,6 @@
-from framework import BehaviourNode, Location, NPC
+from framework.BehaviourNode import BehaviourNode
+from framework.Location import Location
+from framework.NPC import NPC
 import random
 
 class World:
@@ -12,9 +14,10 @@ class World:
         # Location Generation
         start = Location("Start", 32)
         self.location.append(start)
+        
         main_street = Location("Main Street", 30)
         main_street.add_connection(start, 5)
-        self.locations.append(main_street, 5)
+        self.locations.append(main_street)
         
         work = Location("Work", 31)
         work.add_connection(main_street, 5)

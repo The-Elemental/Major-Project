@@ -1,5 +1,5 @@
-import Schedule
-from GraphConnection import GraphConnection
+from framework.Schedule import Schedule
+from framework.GraphConnection import GraphConnection
 from py2neo import Graph, Node, Relationship
 
 class NPC:
