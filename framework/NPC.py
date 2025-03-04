@@ -5,8 +5,8 @@ from py2neo import Graph, Node, Relationship
 class NPC:
     """Base node for NPC's"""
     
-    def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id):
-        self.graph = GraphConnection.get_graph()
+    def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph):
+        self.graph = graph
         # NPC information
         npc_node = Node("NPC",
             name=name,

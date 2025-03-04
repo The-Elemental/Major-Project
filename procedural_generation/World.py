@@ -1,12 +1,17 @@
 from framework.BehaviourNode import BehaviourNode
 from framework.Location import Location
 from framework.NPC import NPC
+from framework.GraphConnection import GraphConnection
 import random
 
 class World:
     """World object"""
     
     def __init__(self):
+        # Initialise Graph
+        self.graph = GraphConnection()
+        self.graph = self.graph.get_graph()
+        
         # Values
         self.NPCs = []
         self.locations = []
@@ -32,7 +37,8 @@ class World:
                           round(random.uniform(0, 1), 1), 
                           round(random.uniform(0, 1), 1), 
                           round(random.uniform(0, 1), 1), 
-                          i)
+                          i,
+                          self.graph)
             self.NPCs.append(new_npc)
         
         for i in range(0, 30):
