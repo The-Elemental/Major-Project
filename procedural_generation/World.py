@@ -13,7 +13,7 @@ class World:
         
         # Location Generation
         start = Location("Start", 32)
-        self.location.append(start)
+        self.locations.append(start)
         
         main_street = Location("Main Street", 30)
         main_street.add_connection(start, 5)
