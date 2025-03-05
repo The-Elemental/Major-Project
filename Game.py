@@ -10,12 +10,37 @@ class Game:
     def next(self):
         self.world.next()
         
+    def converse(self, npc):
+        print("I be talking here")
+        return None
+    
+    def travel(self, location):
+        print("I be walking here")
+        return None
+    
     def play(self):
-        print("-" * 23)
-        print(f"Current Location: {self.current_location}")
-        print(f"NPC's at current location: {self.current_location.get_npcs()}")
-        print("1) Talk")
-        print("2) Travel")
+        while True:
+            print("-" * 23)
+            print(f"Current Location: {self.current_location.name}")
+            index = 1
+            for x in self.current_location.npcs:
+                print(f"{index}) Talk to {x.name}")
+                index += 1
+            for x in self.current_location.connections:
+                print(f"{index}) Travel to {x.name}")
+                index += 1
+            print(f"{index}) Exit")
+            user_input = input("->: ")
+            user_input = int(user_input)
+            if user_input < len(self.current_location.npcs):
+                self.converse(self.current_location.npcs[user_input - 1])
+            elif user_input != index:
+                dict_items = list(self.current_location.connections.items())
+                key, value = dict_items[user_input - 1 - len(self.current_location.npcs)]
+                self.travel(key)
+            else:
+                break
+                
         
 game = Game()
 game.play()
