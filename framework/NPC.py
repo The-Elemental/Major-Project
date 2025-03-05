@@ -1,5 +1,7 @@
 from framework.Schedule import Schedule
 from framework.GraphConnection import GraphConnection
+from framework.BehaviourNode import BehaviourNode
+from framework.Location import Location
 from py2neo import Graph, Node, Relationship
 
 class NPC:
@@ -7,14 +9,18 @@ class NPC:
     
     def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph):
         self.graph = graph
+        self.id = id
+        self.schedule = Schedule()
+        self.activity = None
+        self.location = None
+        
         # NPC information
         npc_node = Node("NPC",
             name=name,
-            location=None,
-            schedule=Schedule(),
+            location_id=None,
+            activity_id=None,
             id=id
         )
-        self.id = id
         
         # Hexaco System
         hexaco_node = Node("Hexaco", 

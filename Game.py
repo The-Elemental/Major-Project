@@ -5,7 +5,7 @@ class Game:
     
     def __init__(self):
         self.world = World()
-        self.current_location = self.world.get_start_location()
+        self.current_location = self.world.get_start()
         
     def next(self):
         self.world.next()

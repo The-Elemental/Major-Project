@@ -7,11 +7,11 @@ class Schedule:
         self.queue = deque()
         for x in range(0, 1440):
             self.queue.append(Event("Home", "Home"))
-        self.current_time = datetime.datetime(1970, 1, 1, 0, 0, 0)
+        self.current_time = datetime(1970, 1, 1, 0, 0, 0)
 
     def add_event(self, start_time, end_time, event):
         """Add a new event to the schedule with start and end times."""
-        time_offset = self.current_time - datetime.datetime(1970, 1, 1, 0, 0, 0)
+        time_offset = self.current_time - datetime(1970, 1, 1, 0, 0, 0)
         start_index = (start_time.to_seconds() - time_offset.to_seconds()) / 300
         end_index = (end_time.to_seconds() - time_offset.to_seconds()) / 300
         for i in range(start_index, end_index + 1):
