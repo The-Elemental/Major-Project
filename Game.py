@@ -1,4 +1,4 @@
-from procedural_generation.World import World
+from framework.World import World
 
 class Game:
     """Running game object"""
@@ -31,16 +31,20 @@ class Game:
                 index += 1
             print(f"{index}) Exit")
             user_input = input("->: ")
-            user_input = int(user_input)
-            if user_input < len(self.current_location.npcs):
-                self.converse(self.current_location.npcs[user_input - 1])
-            elif user_input != index:
-                dict_items = list(self.current_location.connections.items())
-                key, value = dict_items[user_input - 1 - len(self.current_location.npcs)]
-                self.travel(key)
-            else:
-                break
-                
+            try:
+                user_input = int(user_input)
+                if user_input < len(self.current_location.npcs):
+                    self.converse(self.current_location.npcs[user_input - 1])
+                elif user_input < index:
+                    dict_items = list(self.current_location.connections.items())
+                    key, value = dict_items[user_input - 1 - len(self.current_location.npcs)]
+                    self.travel(key)
+                elif user_input == index:
+                    break
+                else:
+                    print("Please choose an option in the list.")
+            except ValueError as e:
+                print(f"Please enter a valid number. Error: {e}")
         
 game = Game()
 game.play()

@@ -1,7 +1,8 @@
 from framework.BehaviourNode import BehaviourNode
 from framework.Location import Location
 from framework.NPC import NPC
-from framework.GraphConnection import GraphConnection
+from py2neo import Graph
+import chromadb
 import random
 
 class World:
@@ -9,8 +10,10 @@ class World:
     
     def __init__(self):
         # Initialise Graph
-        self.graph = GraphConnection()
-        self.graph = self.graph.get_graph()
+        self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
+        
+        # Initialise Database
+        self.database = chromadb.Client().create_collection("npc_memory")
         
         # Values
         self.NPCs = []

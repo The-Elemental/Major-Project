@@ -1,8 +1,5 @@
 from framework.Schedule import Schedule
-from framework.GraphConnection import GraphConnection
-from framework.BehaviourNode import BehaviourNode
-from framework.Location import Location
-from py2neo import Graph, Node, Relationship
+from py2neo import Node, Relationship
 
 class NPC:
     """Base node for NPC's"""
@@ -66,6 +63,22 @@ class NPC:
             if node['location']:
                 node['location'].remove_npc(self)
             new_location.add_npc(self)
+            
+    def meet(self, npc, value):
+        self_node = self.graph.match("NPC", id=self.id).first()
+        npc_node = self.graph.match("NPC", id=npc.id).first()
+        relationship = Relationship(self_node, "KNOWS", npc_node, known_by=[self.id, npc.id], value=value)
+        self.graph.create(relationship)
+        
+    def knows(self, npc1, npc2):
+        npc1_node = self.graph.nodes.match("NPC", id=npc1.id).first()
+        npc2_node = self.graph.nodes.match("NPC", id=npc2.id).first()
+        
+        relationship = self.graph.match((npc1_node, npc2_node), "KNOWS").first()
+        
+        if self.id not in relationship["known_by"]:
+            relationship["known_by"].append(self.id)
+            self.graph.push(relationship)
 
     def __repr__(self):
         return f"NPC({self.name}, Location: {self.location.name if self.location else 'None'})"
