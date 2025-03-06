@@ -12,11 +12,9 @@ class Game:
         
     def converse(self, npc):
         print("I be talking here")
-        return None
     
     def travel(self, location):
-        print("I be walking here")
-        return None
+        self.current_location = location
     
     def play(self):
         while True:

@@ -6,6 +6,7 @@ class NPC:
     
     def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph):
         self.graph = graph
+        self.name = name
         self.id = id
         self.schedule = Schedule()
         self.activity = None
@@ -58,11 +59,11 @@ class NPC:
         
     def move_to(self, new_location):
         """Moves NPC to a new location."""
-        node = self.graph.node.get(self.id)
-        if node:
-            if node['location']:
-                node['location'].remove_npc(self)
-            new_location.add_npc(self)
+        if self.location:
+            self.location.npcs.remove(self)
+        self.location = new_location
+        self.location.npcs.append(self)
+        
             
     def meet(self, npc, value):
         self_node = self.graph.match("NPC", id=self.id).first()

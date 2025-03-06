@@ -42,6 +42,8 @@ class World:
                           round(random.uniform(0, 1), 1), 
                           i,
                           self.graph)
+            #testing location
+            new_npc.move_to(start)
             self.NPCs.append(new_npc)
         
         for i in range(0, 30):
