@@ -16,18 +16,22 @@ class World:
         self.database = chromadb.Client().create_collection("npc_memory")
         
         # Values
-        self.NPCs = []
+        self.npcs = []
         self.locations = []
         
         # Location Generation
-        start = Location("Start", 32)
+        location_id = 0
+        start = Location("Start", location_id)
+        location_id += 1
         self.locations.append(start)
         
-        main_street = Location("Main Street", 30)
+        main_street = Location("Main Street", location_id)
+        location_id += 1
         main_street.add_connection(start, 5)
         self.locations.append(main_street)
         
-        work = Location("Work", 31)
+        work = Location("Work", location_id)
+        location_id += 1
         work.add_connection(main_street, 5)
         self.locations.append(work)
         
@@ -42,14 +46,29 @@ class World:
                           round(random.uniform(0, 1), 1), 
                           i,
                           self.graph)
-            #testing location
-            new_npc.move_to(start)
-            self.NPCs.append(new_npc)
+            self.npcs.append(new_npc)
         
         for i in range(0, 30):
-            new_npc_house = Location(f"House {i}", i)
+            new_npc_house = Location(f"House {i}", location_id + i)
+            self.npcs[i].move_to(new_npc_house)
             new_npc_house.add_connection(main_street, 5)
             self.locations.append(new_npc_house)
             
+    def new_location(self, name, nodes):
+        id = len(self.locations)
+        new_location = Location(name, id, nodes)
+        self.locations.append(new_location)
+        return id
+    
+    def new_npc(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness):
+        id = len(self.npcs)
+        new_npc = NPC(name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, self.graph)
+        self.npcs.append(new_npc)
+        return id
+    
+    def next(self, current_time):
+        for npc in self.npcs:
+            npc.next(current_time)
+        
     def get_start(self):
         return self.locations[0]

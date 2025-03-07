@@ -63,7 +63,6 @@ class NPC:
             self.location.npcs.remove(self)
         self.location = new_location
         self.location.npcs.append(self)
-        
             
     def meet(self, npc, value):
         self_node = self.graph.match("NPC", id=self.id).first()
@@ -80,6 +79,9 @@ class NPC:
         if self.id not in relationship["known_by"]:
             relationship["known_by"].append(self.id)
             self.graph.push(relationship)
+            
+    def next(self, current_time):
+        self.schedule.next(current_time)
 
     def __repr__(self):
         return f"NPC({self.name}, Location: {self.location.name if self.location else 'None'})"
