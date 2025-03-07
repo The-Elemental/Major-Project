@@ -69,6 +69,9 @@ class World:
     def next(self, current_time):
         for npc in self.npcs:
             npc.next(current_time)
+            
+    def exit(self):
+        self.graph.run("MATCH (n) DETACH DELETE n")
         
     def get_start(self):
         return self.locations[0]

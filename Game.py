@@ -46,6 +46,7 @@ class Game:
                     key, value = dict_items[user_input - 1 - len(self.current_location.npcs)]
                     self.travel(key)
                 elif user_input == index:
+                    self.world.exit()
                     print("I be quitting")
                     break
                 else:
