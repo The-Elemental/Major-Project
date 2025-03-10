@@ -6,4 +6,4 @@ class Commitment:
         self.start_time = start_time
         self.end_time = end_time
         self.days = days
-        self.event = Event(name, location, tag)
+        self.event = Event(name, location, behaviour_tag=tag)

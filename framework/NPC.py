@@ -1,5 +1,6 @@
 from framework.Schedule import Schedule
 from py2neo import Node, Relationship
+import sys
 
 class NPC:
     """Base node for NPC's"""
@@ -11,13 +12,12 @@ class NPC:
         self.id = id
         self.schedule = Schedule()
         self.activity = None
+        self.event = None
         self.location = None
         
         # NPC information
         npc_node = Node("NPC",
             name=name,
-            location_id=None,
-            activity_id=None,
             id=id
         )
         
@@ -82,8 +82,42 @@ class NPC:
             self.graph.push(relationship)
             
     def next(self, current_time):
-        
-        self.schedule.next(current_time)
+        if self.activity:
+            metadata = {
+                "npc_id": self.id,
+                "npc_name": self.name,
+                "type": "activity"
+            }
+            
+            query = """
+            MATCH (npc:NPC)-[:HAS_MOOD]->(mood:Mood)
+            WHERE npc.id = $npc_id
+            RETURN mood
+            """
+            result = self.graph.run(query, npc_id=self.id).data()
+            mood_values = result[0]['mood']
+            
+            document = {
+                "activity_id": self.activity.id,
+                "location_id": self.location.id,
+                "timestamp": int(current_time.timestamp()),
+                "mood": mood_values
+            }
+            self.database.add(
+                documents=document,
+                metadata=metadata
+            )
+            
+        self.event = self.schedule.next(current_time)
+        if self.event:
+            self.location = self.event.location
+            if self.event.behaviour_tag:
+                self.activity = self.location.get_best_node(self.event.behaviour_tag, self)
+            elif self.event.behaviour_node:
+                self.activity = self.event.behaviour_node
+            else:
+                print("Error, exiting")
+                sys.exit(1)
 
     def __repr__(self):
         return f"NPC({self.name}, Location: {self.location.name if self.location else 'None'})"
