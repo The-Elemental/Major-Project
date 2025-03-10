@@ -12,6 +12,12 @@ class World:
         # Initialise Graph
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
         
+        # Clear Previous Instances
+        node_count = self.graph.run("MATCH (n) RETURN count(n) AS count")
+        if node_count > 0:
+            print(f"Graph contains {node_count} nodes. Clearing previous session")
+            self.graph.run("MATCH (n) DETACH DELETE n")
+        
         # Initialise Database
         self.database = chromadb.Client().create_collection("npc_memory")
         
