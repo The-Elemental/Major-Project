@@ -58,7 +58,8 @@ class World:
                           round(random.uniform(0, 1), 1), 
                           round(random.uniform(0, 1), 1), 
                           i,
-                          self.graph)
+                          self.graph,
+                          self.database)
             self.npcs.append(new_npc)
         
         for i in range(0, 30):
@@ -75,7 +76,7 @@ class World:
     
     def new_npc(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness):
         id = len(self.npcs)
-        new_npc = NPC(name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, self.graph)
+        new_npc = NPC(name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, self.graph, self.database)
         self.npcs.append(new_npc)
         return id
     

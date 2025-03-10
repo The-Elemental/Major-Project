@@ -4,8 +4,9 @@ from py2neo import Node, Relationship
 class NPC:
     """Base node for NPC's"""
     
-    def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph):
+    def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph, database):
         self.graph = graph
+        self.database = database
         self.name = name
         self.id = id
         self.schedule = Schedule()
@@ -81,6 +82,7 @@ class NPC:
             self.graph.push(relationship)
             
     def next(self, current_time):
+        
         self.schedule.next(current_time)
 
     def __repr__(self):
