@@ -4,16 +4,23 @@ from framework.NPC import NPC
 from py2neo import Graph
 import chromadb
 import random
+import sys
 
 class World:
     """World object"""
     
     def __init__(self):
         # Initialise Graph
-        self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
+        try:
+            self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
+            print("✅ Connected to Neo4j successfully!")
+        except:
+            print("⚠️ Could not connect to Neo4j. Please start the Neo4j database and try again.")
+            sys.exit(1)
         
         # Clear Previous Instances
-        node_count = self.graph.run("MATCH (n) RETURN count(n) AS count")
+        result = self.graph.run("MATCH (n) RETURN count(n) AS count").data()
+        node_count = result[0]["count"] if result else 0
         if node_count > 0:
             print(f"Graph contains {node_count} nodes. Clearing previous session")
             self.graph.run("MATCH (n) DETACH DELETE n")
