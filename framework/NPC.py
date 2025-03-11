@@ -44,6 +44,7 @@ class NPC:
             guilt=0, 
             pride=0, 
             stress=0,
+            anxiety=0,
             fatigue=0
         )
         
@@ -118,6 +119,8 @@ class NPC:
             else:
                 print("Error, exiting")
                 sys.exit(1)
+        
+        # CALCULATE MOOD CHANGE FOR NPC
 
     def __repr__(self):
         return f"NPC({self.name}, Location: {self.location.name if self.location else 'None'})"
