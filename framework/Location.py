@@ -1,18 +1,20 @@
+from framework.NPC import NPC
+from datetime import time
 class Location:
     """Base object for all locations"""
     
-    def __init__(self, name, id, nodes=[]):
+    def __init__(self, name:str, id:int, nodes:set=set()):
         self.name = name
         self.id = id
         self.nodes = nodes
         self.connections={}
-        self.npcs = []
+        self.npcs = set()
         
-    def add_connection(self, location, distance):
+    def add_connection(self, location:"Location", distance:int):
         self.connections[location] = distance
         location.connections[self] = distance
 
-    def get_best_node(self, required_tags, npc):
+    def get_best_node(self, required_tags:set, npc:NPC, current_time:time):
         query = """
         MATCH (npc:NPC {id: $npc_id}) 
         OPTIONAL MATCH (npc)-[:HAS_MOOD]->(mood:Mood)
@@ -42,7 +44,7 @@ class Location:
             #   emotionality -> ^ sadness + ^ fear + ^ stress + ^ anxiety
             #   extroversion -> ^ stress + ^ anxiety
             #   honesty -> ^ disgust + ^ stress + ^ pride + ^ guilt
-            if x.tags.contains(required_tags):
+            if required_tags.issubset(x.tags) and current_time.weekday() in x.active_days and x.start_time <= current_time.time() <= x.end_time:
                 hexaco_difference = {
                     key: (hexaco[key] - behavior_value)  # Calculate the difference
                     for key, behavior_value in x.hexaco.items()

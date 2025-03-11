@@ -1,11 +1,13 @@
 from framework.Schedule import Schedule
+from framework.Location import Location
 from py2neo import Node, Relationship
+from datetime import datetime
 import sys
 
 class NPC:
     """Base node for NPC's"""
     
-    def __init__(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, graph, database):
+    def __init__(self, name:str, honesty:int, emotionality:int, extroversion:int, agreeableness:int, conscientiousness:int, openness:int, id:int, graph, database):
         self.graph = graph
         self.database = database
         self.name = name
@@ -59,20 +61,20 @@ class NPC:
         self.graph.create(hexaco_rel)
         self.graph.create(mood_rel)
         
-    def move_to(self, new_location):
+    def move_to(self, new_location:Location):
         """Moves NPC to a new location."""
         if self.location:
             self.location.npcs.remove(self)
         self.location = new_location
         self.location.npcs.append(self)
             
-    def meet(self, npc, value):
+    def meet(self, npc:"NPC", value:int):
         self_node = self.graph.match("NPC", id=self.id).first()
         npc_node = self.graph.match("NPC", id=npc.id).first()
         relationship = Relationship(self_node, "KNOWS", npc_node, known_by=[self.id, npc.id], value=value)
         self.graph.create(relationship)
         
-    def knows(self, npc1, npc2):
+    def knows(self, npc1:"NPC", npc2:"NPC"):
         npc1_node = self.graph.nodes.match("NPC", id=npc1.id).first()
         npc2_node = self.graph.nodes.match("NPC", id=npc2.id).first()
         
@@ -82,7 +84,7 @@ class NPC:
             relationship["known_by"].append(self.id)
             self.graph.push(relationship)
             
-    def next(self, current_time):
+    def next(self, current_time:datetime):
         if self.activity:
             metadata = {
                 "npc_id": self.id,
@@ -113,7 +115,7 @@ class NPC:
         if self.event:
             self.location = self.event.location
             if self.event.behaviour_tag:
-                self.activity = self.location.get_best_node(self.event.behaviour_tag, self)
+                self.activity = self.location.get_best_node(self.event.behaviour_tag, self, current_time)
             elif self.event.behaviour_node:
                 self.activity = self.event.behaviour_node
             else:

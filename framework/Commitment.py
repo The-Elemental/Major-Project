@@ -1,9 +1,11 @@
 from framework.Event import Event
+from framework.Location import Location
+from datetime import time
 
 class Commitment:
-    def __init__(self, name, start_time, end_time, days, location, tag):
+    def __init__(self, name:str, start_time:time, end_time:time, days:set, location:Location, tags:set):
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
         self.days = days
-        self.event = Event(name, location, behaviour_tag=tag)
+        self.event = Event(name=name, location=location, behaviour_tags=tags)

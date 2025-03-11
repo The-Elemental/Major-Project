@@ -1,4 +1,6 @@
 from framework.World import World
+from framework.Location import Location
+from framework.NPC import NPC
 from datetime import datetime, timedelta
 
 class Game:
@@ -13,10 +15,10 @@ class Game:
         self.current_time += timedelta(minutes=5)
         self.world.next(self.current_time)
         
-    def converse(self, npc):
+    def converse(self, npc:NPC):
         print("I be talking here")
     
-    def travel(self, location):
+    def travel(self, location:Location):
         self.current_location = location
     
     def play(self):

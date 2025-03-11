@@ -1,6 +1,7 @@
 from framework.Event import Event
 from framework.Commitment import Commitment
-from datetime import datetime, timedelta
+from framework.Location import Location
+from datetime import datetime, timedelta, time
 from collections import deque
 
 
@@ -10,7 +11,7 @@ class Schedule:
         self.index_offset = 0
         self.commitments = []
 
-    def add_event(self, start_time, end_time, event):
+    def add_event(self, start_time:time, end_time:time, event:Event):
         """Add a new event to the schedule with start and end times."""
         start_index = (start_time.timestamp() // 300) - self.index_offset
         end_index = (end_time.timestamp() // 300) - self.index_offset
@@ -21,7 +22,7 @@ class Schedule:
         """Check next event."""
         return self.queue[0]
 
-    def next(self, current_time):
+    def next(self, current_time:datetime):
         self.index_offset += 1
         
         # Create Scheduling Logic:
@@ -37,7 +38,7 @@ class Schedule:
         
         return self.queue.popleft()
         
-    def add_commitment(self, name, start_time, end_time, days, location, tag):
+    def add_commitment(self, name:str, start_time:time, end_time:time, days:set, location:Location, tag:set):
         self.commitments.append(Commitment(name, start_time, end_time, days, location, tag))
     
     def __repr__(self):

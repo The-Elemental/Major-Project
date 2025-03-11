@@ -3,9 +3,9 @@ from datetime import time
 class BehaviourNode:
     """Base class for all behaviour nodes"""
     
-    def __init__(self, name, honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, 
-                     happiness=0, sadness=0, anger=0, fear=0, disgust=0, surprise=0, love=0, jealousy=0, guilt=0, pride=0, stress=0, anxiety=0, fatigue=0, 
-                     tags=[], start_time=time(0, 0), end_time=time(23, 59), active_days=[0, 1, 2, 3, 4, 5, 6], duration=0):
+    def __init__(self, name:str, honesty:float, emotionality:float, extroversion:float, agreeableness:float, conscientiousness:float, openness:float, 
+                     happiness:int=0, sadness:int=0, anger:int=0, fear:int=0, disgust:int=0, surprise:int=0, love:int=0, jealousy:int=0, guilt:int=0, pride:int=0, stress:int=0, anxiety:int=0, fatigue:int=0, 
+                     tags:set=set(), start_time:time=time(0, 0), end_time:time=time(23, 59), active_days:set=set([0, 1, 2, 3, 4, 5, 6]), duration:int=0):
             self.name = name
 
             self.hexaco = {
@@ -38,6 +38,7 @@ class BehaviourNode:
             self.tags = tags
             
             # Time
-            start_time = start_time
-            end_time = end_time
-            active_days = active_days
+            self.start_time = start_time
+            self.end_time = end_time
+            self.active_days = active_days
+            self.duration = duration

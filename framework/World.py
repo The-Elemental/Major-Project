@@ -2,6 +2,7 @@ from framework.BehaviourNode import BehaviourNode
 from framework.Location import Location
 from framework.NPC import NPC
 from py2neo import Graph
+from datetime import datetime
 import chromadb
 import random
 import sys
@@ -68,19 +69,19 @@ class World:
             new_npc_house.add_connection(main_street, 5)
             self.locations.append(new_npc_house)
             
-    def new_location(self, name, nodes):
+    def new_location(self, name:str, nodes:set):
         id = len(self.locations)
         new_location = Location(name, id, nodes)
         self.locations.append(new_location)
         return id
     
-    def new_npc(self, name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness):
+    def new_npc(self, name:str, honesty:int, emotionality:int, extroversion:int, agreeableness:int, conscientiousness:int, openness:int):
         id = len(self.npcs)
         new_npc = NPC(name,  honesty, emotionality, extroversion, agreeableness, conscientiousness, openness, id, self.graph, self.database)
         self.npcs.append(new_npc)
         return id
     
-    def next(self, current_time):
+    def next(self, current_time:datetime):
         for npc in self.npcs:
             npc.next(current_time)
             
