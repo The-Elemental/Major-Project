@@ -122,7 +122,9 @@ class NPC:
                 print("Error, exiting")
                 sys.exit(1)
         
-        # CALCULATE MOOD CHANGE FOR NPC
+        mood_change = self.activity.get_change(self)
+        for key, value in mood_change.items():
+            self.mood[key] = max(0, min(100, self.mood[key] + value))
 
     def __repr__(self):
         return f"NPC({self.name}, Location: {self.location.name if self.location else 'None'})"
