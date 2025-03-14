@@ -1,6 +1,4 @@
-from framework.World import World
-from framework.Location import Location
-from framework.NPC import NPC
+from framework import World, Location, NPC
 from datetime import datetime, timedelta
 
 class Game:

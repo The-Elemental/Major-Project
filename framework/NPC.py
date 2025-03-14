@@ -1,5 +1,5 @@
-from framework.Schedule import Schedule
-from framework.Location import Location
+from .Schedule import Schedule
+from .Location import Location
 from py2neo import Node, Relationship
 from datetime import datetime
 import sys

@@ -1,6 +1,6 @@
-from framework.Event import Event
-from framework.Commitment import Commitment
-from framework.Location import Location
+from .Event import Event
+from .Commitment import Commitment
+from .Location import Location
 from datetime import datetime, timedelta, time
 from collections import deque
 
