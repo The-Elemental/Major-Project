@@ -76,7 +76,7 @@ class BehaviourNode:
             if behavior_value != 0  # Skip behavior nodes with value 0
         }
         mood_change = npc.mood.copy()
-        # stress : openess, conscientiousness, agreeableness, emotionality, extroversion, honesty
+        # stress : openness, conscientiousness, agreeableness, emotionality, extroversion, honesty
         stress_change = (hexaco_difference['openness'] * 5) * max(5, mood['stress'])
         stress_change += (hexaco_difference['conscientiousness'] * 5) * max(5, mood['stress'])
         stress_change += (hexaco_difference['agreeableness'] * 5) * max(5, mood['stress'])
