@@ -1,4 +1,4 @@
-from .NPC import NPC
+from framework import NPC
 from datetime import time
 class Location:
     """Base object for all locations"""

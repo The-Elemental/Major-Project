@@ -1,5 +1,5 @@
-from .Event import Event
-from .Location import Location
+from framework import Event
+from framework import Location
 from datetime import time
 
 class Commitment:

@@ -1,10 +1,10 @@
-from framework import World, Location, NPC
+from framework import World, Location, NPC, LLM
 from datetime import datetime, timedelta
-
 class Game:
     """Running game object"""
     
     def __init__(self):
+        self.LLM = LLM()
         self.world = World()
         self.current_location = self.world.get_start()
         self.current_time = datetime(1970, 1, 1, 0, 0, 0)

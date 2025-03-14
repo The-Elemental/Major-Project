@@ -1,6 +1,6 @@
-from .BehaviourNode import BehaviourNode
-from .Location import Location
-from .NPC import NPC
+from framework import BehaviourNode
+from framework import Location
+from framework import NPC
 from py2neo import Graph
 from datetime import datetime
 import chromadb

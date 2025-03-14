@@ -1,2 +1,6 @@
 # Ignore PyCache
-**/__pycache__/*
+**/__pycache__/
+
+# Ignore the folder with large language models
+LLM/7B/*
+LLM/67B/*
