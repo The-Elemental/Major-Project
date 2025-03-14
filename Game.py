@@ -4,6 +4,7 @@ class Game:
     """Running game object"""
     
     def __init__(self):
+        #self.LLM = LLM(True, False) #Use this line if you want to skip v67b (much bigger and more computationally expensive LLM)
         self.LLM = LLM()
         self.world = World()
         self.current_location = self.world.get_start()
